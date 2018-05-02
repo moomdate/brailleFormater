@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Text </title>
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+	<div class="container">
+		<hr>
+		<center><h3>Braille Formater (TBT)</h3></center>
+		<hr>
+		<textarea id="textInput" class="form-control"></textarea>
+		<button id="converst" class="btn btn-info btn-block">Hex</button>
+		<textarea id="textOutput" class="form-control"></textarea>
+		Data length:
+		<label id="length__" class="badge badge-warning"></label>
+		<div>
+			<input type="text" name="filename" id="filename" class="form-control" value="text">
+			<a id="save" class="btn btn-info btn-block">Save</a>
+		</div>
+	</div>
+
+</body>
+<script src="js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript">
+	 var wordOutput = "";
+	$(document).ready(function(){
+		$("#converst").click(function(){
+			var text_ = $('#textInput').val();
+			var text_out = "";
+			$('#length__').text(text_.length);
+		    var arrayText = text_.split("\n");
+		    var countLengthWord = 0 ;
+		    var thisLastWord = 0;
+		    var PrevoisLength  = 0;
+		    var lastWordPosition = 0;
+		   
+
+			//console.log(arrayText.length);
+			for(var i = 0; i <arrayText.length;i++){
+				//countLengthWord += arrayText[i].length;
+				//if(i<arrayText.length-1) // count 
+				console.log(arrayText[i],i);
+				if(arrayText[i].length<20)
+				{
+					console.log(arrayText[i].length)
+					var buffer = 20-arrayText[i].length;
+					for(var j = 0; j <buffer;j++){
+						//console.log('j:',j);
+						arrayText[i]+=" ";
+					}
+					arrayText[i]+="\r\n";
+					
+					wordOutput	+=	arrayText[i];	
+				}
+					
+			}
+				//	console.log(text_.length);
+			//	console.log(wordOutput.length)
+
+			$('#textOutput').val(wordOutput);
+		//alert(text_out);
+		});
+	});
+	var anchor = document.querySelector('a');
+	anchor.onclick = function() {
+	    anchor.href = 'data:tbt/plain;charset=utf-8,' + encodeURIComponent(wordOutput);
+	    anchor.download = ''+$('#filename').val()+''+'.TBT';
+	};
+</script>
+</html>
